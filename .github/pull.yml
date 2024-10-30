@@ -1,0 +1,8 @@
+version: "1"
+rules:
+  - base: prod
+    upstream: DenverCoder1:main
+    mergeMethod: hardreset
+    mergeUnstable: true
+label: ":arrow_heading_down: pull"
+conflictLabel: "merge-conflict"
