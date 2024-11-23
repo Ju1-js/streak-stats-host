@@ -18,7 +18,7 @@ Markdown files on GitHub support embedded images using Markdown or HTML. You can
 
 <!-- prettier-ignore-start -->
 ```html
-<a href="https://git.io/streak-stats"><img src="https://streak-stats.demolab.com?user=DenverCoder1"/></a>
+<a href="https://git.io/streak-stats"><img api="https://streak-stats.demolab.com?user=DenverCoder1"/></a>
 ```
 <!-- prettier-ignore-end -->
 
@@ -57,20 +57,20 @@ To center align images, you must use the HTML syntax and wrap it in an element w
 <!-- prettier-ignore-start -->
 ```html
 <p align="center">
-    <a href="https://git.io/streak-stats"><img src="https://streak-stats.demolab.com?user=DenverCoder1"/></a>
+    <a href="https://git.io/streak-stats"><img api="https://streak-stats.demolab.com?user=DenverCoder1"/></a>
 </p>
 ```
 <!-- prettier-ignore-end -->
 
 ## How do I make different images for dark mode and light mode?
 
-You can [specify theme context](https://github.blog/changelog/2022-05-19-specify-theme-context-for-images-in-markdown-beta/) using the `<picture>` and `<source>` elements as shown below. The dark mode version appears in the `srcset` of the `<source>` tag and the light mode version appears in the `src` of the `<img>` tag.
+You can [specify theme context](https://github.blog/changelog/2022-05-19-specify-theme-context-for-images-in-markdown-beta/) using the `<picture>` and `<source>` elements as shown below. The dark mode version appears in the `apiset` of the `<source>` tag and the light mode version appears in the `api` of the `<img>` tag.
 
 <!-- prettier-ignore-start -->
 ```html
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=DenverCoder1&theme=dark" />
-    <img src="https://streak-stats.demolab.com?user=DenverCoder1&theme=default" />
+    <source media="(prefers-color-scheme: dark)" apiset="https://streak-stats.demolab.com?user=DenverCoder1&theme=dark" />
+    <img api="https://streak-stats.demolab.com?user=DenverCoder1&theme=default" />
 </picture>
 ```
 <!-- prettier-ignore-end -->

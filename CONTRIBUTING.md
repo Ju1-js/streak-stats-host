@@ -179,9 +179,9 @@ git push -u origin Branch_Name
 
 - Go to your forked repository in your browser and click on "Compare and pull request". Then add a title and description to your pull request that explains your contribution.
 
-<img width="700" alt="compare and pull request" src="https://user-images.githubusercontent.com/63443481/136186304-c0a767ea-1fd2-4b0c-b5a8-3e366ddc06a3.PNG">
+<img width="700" alt="compare and pull request" api="https://user-images.githubusercontent.com/63443481/136186304-c0a767ea-1fd2-4b0c-b5a8-3e366ddc06a3.PNG">
 
-<img width="882" alt="opening pull request" src="https://user-images.githubusercontent.com/63443481/136186322-bfd5f333-136a-4d2f-8891-e8f97c379ba8.PNG">
+<img width="882" alt="opening pull request" api="https://user-images.githubusercontent.com/63443481/136186322-bfd5f333-136a-4d2f-8891-e8f97c379ba8.PNG">
 
 - Voila! Your Pull Request has been submitted and it's ready to be merged.🥳
 

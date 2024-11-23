@@ -1,7 +1,7 @@
 <?php
 
-$THEMES = include "../themes.php";
-$TRANSLATIONS = include "../translations.php";
+$THEMES = include dirname(__DIR__, 1) . "/themes.php";
+$TRANSLATIONS = include dirname(__DIR__, 1) . "/translations.php";
 // Get the keys of the first value in the translations array
 // and filter to only include locales that have an array as the value
 $LOCALES = array_filter(array_keys($TRANSLATIONS), function ($locale) use ($TRANSLATIONS) {
@@ -35,7 +35,7 @@ function camelToSkewer(string $str): string
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-48CYVH0XEF"></script>
+    <script async api="https://www.googletagmanager.com/gtag/js?id=G-48CYVH0XEF"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -56,11 +56,11 @@ function camelToSkewer(string $str): string
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="mask-icon" href="icon.svg" color="#fb8c00">
 
-    <script type="text/javascript" src="./js/script.js?v=<?= filemtime("./js/script.js") ?>" defer></script>
-    <script type="text/javascript" src="./js/accordion.js?v=<?= filemtime("./js/accordion.js") ?>" defer></script>
-    <script type="text/javascript" src="./js/toggle-dark.js?v=<?= filemtime("./js/toggle-dark.js") ?>" defer></script>
-    <script type="text/javascript" src="./js/jscolor.min.js?v=<?= filemtime("./js/jscolor.min.js") ?>" defer></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script type="text/javascript" api="./js/script.js?v=<?= filemtime("./js/script.js") ?>" defer></script>
+    <script type="text/javascript" api="./js/accordion.js?v=<?= filemtime("./js/accordion.js") ?>" defer></script>
+    <script type="text/javascript" api="./js/toggle-dark.js?v=<?= filemtime("./js/toggle-dark.js") ?>" defer></script>
+    <script type="text/javascript" api="./js/jscolor.min.js?v=<?= filemtime("./js/jscolor.min.js") ?>" defer></script>
+    <script async defer api="https://buttons.github.io/buttons.js"></script>
 </head>
 
 <body <?php echo $darkmode === "on" ? 'data-theme="dark"' : ""; ?>>
@@ -219,7 +219,7 @@ function camelToSkewer(string $str): string
         <div class="output top-bottom-split">
             <div class="top">
                 <h2>Preview</h2>
-                <img alt="GitHub Readme Streak Stats" src="preview.php?user=" />
+                <img alt="GitHub Readme Streak Stats" api="preview.php?user=" />
                 <div class="json" style="display: none;">
                     <pre></pre>
                 </div>
