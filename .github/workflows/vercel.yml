@@ -1,0 +1,80 @@
+name: Prepare Vercel Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - prod
+
+jobs:
+  prepare-vercel:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout prod branch
+        uses: actions/checkout@v3
+        with:
+          ref: prod
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "Ju1-js"
+          git config --global user.email "40339350+Ju1-js@users.noreply.github.com"
+      
+      - name: Download required files and make changes
+        run: |
+          # Exit immediately if a command fails
+          set -e
+
+          # Step 1: Rename src to api
+          if [ -d "src" ]; then
+            echo "Renaming 'src' to 'api'..."
+            mv src api
+          else
+            echo "'src' directory not found. Skipping rename."
+          fi
+
+          # Step 2: Perform replacements in all files except excluded ones
+          echo "Performing text replacements in files (excluding .git and composer.lock)..."
+          find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's/src/api/g' {} +
+          find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's|"../|dirname(__DIR__, 1) . "|g' {} +
+          find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's/_SERVER/_ENV/g' {} +
+
+          # Specific replacements in translation-progress.php
+          if [ -f "scripts/translation-progress.php" ]; then  
+            echo "Applying specific replacements in scripts/translation-progress.php..."
+            sed -i 's|$TRANSLATIONS = include __DIR__ . "/../src/translations.php";|$TRANSLATIONS = include dirname(__DIR__, 1) . "/api/translations.php";|g' scripts/translation-progress.php
+            sed -i 's|$translations_file = file(__DIR__ . "/../src/translations.php");|$translations_file = file(dirname(__DIR__, 1) . "/api/translations.php");|g' scripts/translation-progress.php
+            sed -i 's|__DIR__ . "/../README.md",|dirname(__DIR__, 1) . "/README.md",|g' scripts/translation-progress.php
+            
+            echo "Performing simple replacement in scripts/translation-progress.php..."
+            sed -i 's|src/|api/|g' scripts/translation-progress.php
+          fi
+
+          # Specific replacement in tests/StatsTest.php
+          if [ -f "tests/StatsTest.php" ]; then
+            echo "Applying specific replacement in tests/StatsTest.php..."
+            sed -i 's|\$message = .*file_exists(dirname(__DIR__ . "../.env", 1))|$message = file_exists(dirname(__DIR__, 1) . "/.env")|g' tests/StatsTest.php
+          fi
+
+          # Step 3: Download required files
+          echo "Downloading .vercelignore..."
+          curl -o .vercelignore https://raw.githubusercontent.com/DenverCoder1/github-readme-streak-stats/refs/heads/vercel/.vercelignore
+
+          echo "Downloading vercel-static.php..."
+          mkdir -p api/demo
+          curl -o api/demo/vercel-static.php https://raw.githubusercontent.com/DenverCoder1/github-readme-streak-stats/refs/heads/vercel/api/demo/vercel-static.php
+
+          echo "Downloading vercel.json..."
+          curl -o vercel.json https://raw.githubusercontent.com/DenverCoder1/github-readme-streak-stats/refs/heads/vercel/vercel.json
+
+          # Step 4: Commit changes to a new branch
+          echo "Creating and committing changes to 'vercel' branch..."
+          git checkout -b vercel
+          git add .
+          git commit -m "Prepare files for Vercel deployment"
+      
+      - name: Push changes to Vercel branch
+        run: |
+          echo "Force pushing changes to the 'vercel' branch..."
+          git push origin vercel --force
