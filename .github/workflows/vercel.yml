@@ -37,7 +37,7 @@ jobs:
           # Step 2: Perform replacements in all files except excluded ones
           echo "Performing text replacements in files (excluding .git and composer.lock)..."
           find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's/src/api/g' {} +
-          find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's|"../|dirname(__DIR__, 1) . "/|g' {} +
+          find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's|"\.\.\/|dirname(__DIR__, 1) . "\/|g' {} +
           find . -type f -not -path "./.git/*" -not -path "./.github/*" -not -name "composer.lock" -not -name "translation-progress.php" -exec sed -i 's/_SERVER/_ENV/g' {} +
 
           # Specific replacements in translation-progress.php
